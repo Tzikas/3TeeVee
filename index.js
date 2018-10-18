@@ -11,7 +11,7 @@ var camera, light, scene, renderer, rectangle, scene2, renderer2, div, controls;
         function init() {
             //camera
             camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
-            camera.position.set(0, 0, -1000);
+            camera.position.set(0, 0, 1000);
 
             controls
             controls = new THREE.OrbitControls(camera);
@@ -22,6 +22,7 @@ var camera, light, scene, renderer, rectangle, scene2, renderer2, div, controls;
             //Scene
             scene = new THREE.Scene();
 
+            /*
             //CubeGeometry
             rectangle = new THREE.Mesh(new THREE.CubeGeometry(600, 350, 100), new THREE.MeshPhongMaterial());
             scene.add(rectangle);
@@ -35,6 +36,57 @@ var camera, light, scene, renderer, rectangle, scene2, renderer2, div, controls;
             //HemisphereLight
             hemiLight = new THREE.HemisphereLight(0xffbf67, 0x15c6ff);
             scene.add(hemiLight);
+            */
+
+
+
+
+            console.log(Math.random()) 
+            // scene
+            scene = new THREE.Scene();
+            var ambient = new THREE.AmbientLight( 0x101030 );
+            scene.add( ambient );
+            var directionalLight = new THREE.DirectionalLight( 0xffeedd );
+            directionalLight.position.set( 0, 0, 1 );
+            scene.add( directionalLight );
+
+            // texture
+            var manager = new THREE.LoadingManager();
+            manager.onProgress = function ( item, loaded, total ) {
+                console.log( item, loaded, total );
+            };
+            // model
+            var loader = new THREE.OBJLoader( manager );
+            loader.load( 'Retro_TV/Retro_TV.obj', function ( object ) {
+                console.log(object);
+                object.traverse( function ( child ) {
+                    if ( child instanceof THREE.Mesh ) {
+                        console.log(child) 
+                        child.material.forEach(element => {
+                            //element.color.setHex(0x00FF00);
+                            let color = '0x'+(Math.random()*0xFFFFFF<<0).toString(16);
+                            console.log(color);
+            
+                            element.color.setHex('0xffffff');
+                            console.log(element);
+                            console.log(color);
+                            
+                            //element.texture.setHex(0x00FF00);
+                            //element.map = texture;
+                        });
+                          //child.material.ambient.setHex(0xFF0000);
+                                          //child.material[0].color.setHex(0x00FF00);
+                        //child.material.map = texture;
+                    }
+                } );
+
+            obj = object
+            scene.add( obj );
+            })
+
+
+
+                
 
             //WebGL Renderer
             renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -48,18 +100,20 @@ var camera, light, scene, renderer, rectangle, scene2, renderer2, div, controls;
 
             //HTML
             element = document.createElement('div');
-            element.innerHTML = 'Plain text inside a div.';
+            //element = document.getElementById('tv');
+
+            element.innerHTML = '<iframe src="https://www.youtube.com/embed/uuDu43Gnyts" frameborder="0" allowfullscreen=""></iframe>';
             element.className = 'animated bounceInDown' ; 
             element.style.background = "#0094ff";
-            element.style.fontSize = "2em";
+            element.style.fontSize = "1em";
             element.style.color = "white";
-            element.style.padding = "2em";
+            element.style.padding = "1em";
 
             //CSS Object
             div = new THREE.CSS3DObject(element);
             div.position.x = 8;
             div.position.y = 9;
-            div.position.z = 185;
+            div.position.z = 50;
             scene2.add(div);
 
             //CSS3D Renderer
