@@ -105,15 +105,15 @@ var camera, light, scene, renderer, rectangle, scene2, renderer2, div, controls;
             element.innerHTML = '<iframe src="https://www.youtube.com/embed/uuDu43Gnyts" frameborder="0" allowfullscreen=""></iframe>';
             element.className = 'animated bounceInDown' ; 
             element.style.background = "#0094ff";
-            element.style.fontSize = "1em";
+            element.style.fontSize = "2em";
             element.style.color = "white";
-            element.style.padding = "1em";
+            element.style.padding = "2em";
 
             //CSS Object
             div = new THREE.CSS3DObject(element);
             div.position.x = 8;
             div.position.y = 9;
-            div.position.z = 50;
+            div.position.z = 100;
             scene2.add(div);
 
             //CSS3D Renderer
